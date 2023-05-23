@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>  
+    .thumbnail {
+      cursor: pointer;
+      height: 200px;
+      overflow: hidden;
+    }
+    #thumbnailImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Image Gallery</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="thumbnail" id="thumbnailContainer">
+          <img src="" alt="Thumbnail" id="thumbnailImage">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3" id="thumbnailsRow">
+    </div>
+  </div>
+
+  <script>
+    // Array of image URLs
+    const imageUrls = [
+      "image1.jpg",
+      "image2.jpg",
+      "image3.jpg",
+      "image4.jpg"
+    ];
+
+    // Function to handle thumbnail click
+    function handleThumbnailClick(url) {
+      const thumbnailImage = document.getElementById('thumbnailImage');
+      thumbnailImage.src = url;
+    }
+
+    // Display thumbnails and set up click event listeners
+    const thumbnailsRow = document.getElementById('thumbnailsRow');
+    imageUrls.forEach(url => {
+      const thumbnail = document.createElement('div');
+      thumbnail.classList.add('col-md-2', 'mb-3');
+      thumbnail.innerHTML = `
+        <img src="${url}" alt="Thumbnail" class="img-thumbnail" onclick="handleThumbnailClick('${url}')">
+      `;
+      thumbnailsRow.appendChild(thumbnail);
+    });
+  </script>
+</body>
+</html>
