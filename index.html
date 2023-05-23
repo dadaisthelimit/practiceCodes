@@ -1,0 +1,23 @@
+<!-- Create a To-Do List:
+
+
+Implement a form with an input field and a submit button.
+Upon submitting the form, create a new list item with the entered text and append it to an
+unordered list (UL) in the DOM.
+Add a delete button to each list item, which removes the item from the list when clicked. -->
+<html>
+   <head>
+       <link rel="stylesheet" type="text/css" href="style.css">
+       <script src="script.js"></script>
+   </head>
+   <body>
+       <form onsubmit="submitForm(event)">
+           <input type="text" id="todo" placeholder="Enter a to-do item">
+           <input type="submit" value="Add">
+       </form>
+       <ul id="list">
+
+
+       </ul>
+   </body>
+</html>
