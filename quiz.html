@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demon Slayer Quiz</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container mt-4">
+    <h1>Demon Slayer Quiz</h1>
+    <form id="quizForm">
+      <div id="questionContainer"></div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div id="scoreContainer" class="mt-4"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const quizData = [
+        {
+          question: 'What is the name of the protagonist in Demon Slayer?',
+          options: ['Tanjiro Kamado', 'Zenitsu Agatsuma', 'Inosuke Hashibira'],
+          answer: 'Tanjiro Kamado'
+        },
+        {
+          question: 'What is Tanjiro\'s sister\'s name?',
+          options: ['Kanao Tsuyuri', 'Nezuko Kamado', 'Shinobu Kocho'],
+          answer: 'Nezuko Kamado'
+        },
+        {
+          question: 'Who is the strongest Hashira in Demon Slayer?',
+          options: ['Giyu Tomioka', 'Sanemi Shinazugawa', 'Gyomei Himejima'],
+          answer: 'Gyomei Himejima'
+        },
+        {
+          question: 'What is the name of Zenitsu\'s Thunder Breathing technique?',
+          options: ['Breath of Thunderclap and Flash', 'Breath of Water', 'Breath of Beast'],
+          answer: 'Breath of Thunderclap and Flash'
+        },
+        {
+          question: 'What is the name of the main antagonist in Demon Slayer?',
+          options: ['Muzan Kibutsuji', 'Akaza', 'Enmu'],
+          answer: 'Muzan Kibutsuji'
+        },
+        {
+          question: 'Who is the master of the Flame Breathing technique?',
+          options: ['Tanjiro Kamado', 'Rengoku Kyojuro', 'Obanai Iguro'],
+          answer: 'Rengoku Kyojuro'
+        },
+        {
+          question: 'What is the name of the demon slayer corps leader?',
+          options: ['Giyu Tomioka', 'Shinobu Kocho', 'Kagaya Ubuyashiki'],
+          answer: 'Kagaya Ubuyashiki'
+        },
+        {
+          question: 'What is the color of Tanjiro\'s sword guard?',
+          options: ['Black', 'Red', 'Green'],
+          answer: 'Black'
+        },
+        {
+          question: 'Who is the insect Hashira in Demon Slayer?',
+          options: ['Shinobu Kocho', 'Mitsuri Kanroji', 'Muichiro Tokito'],
+          answer: 'Shinobu Kocho'
+        },
+        {
+          question: 'What is the name of the Demon Slayer Corps\' crow?',
+          options: ['Tamayo', 'Kanae Kocho', 'Kotetsu'],
+          answer: 'Kotetsu'
+        }
+      ];
+
+      const quizForm = document.getElementById('quizForm');
+      const questionContainer = document.getElementById('questionContainer');
+      const scoreContainer = document.getElementById('scoreContainer');
+
+      let currentQuestion = 0;
+      let score = 0;
+
+      function showQuestion() {
+        const question = quizData[currentQuestion];
+
+        const questionCard = document.createElement('div');
+        questionCard.classList.add('card', 'my-4');
+        questionCard.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${question.question}</h5>
+            ${question.options.map(option => `
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" value="${option}" required>
+                <label class="form-check-label">${option}</label>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        questionContainer.innerHTML = '';
+        questionContainer.appendChild(questionCard);
+      }
+
+      function calculateScore() {
+        const selectedOption = document.querySelector('input[name="answer"]:checked');
+        if (selectedOption) {
+          const userAnswer = selectedOption.value;
+          const correctAnswer = quizData[currentQuestion].answer;
+
+          if (userAnswer === correctAnswer) {
+            score++;
+          }
+
+          currentQuestion++;
+
+          if (currentQuestion < quizData.length) {
+            showQuestion();
+          } else {
+            showScore();
+          }
+        }
+      }
+
+      function showScore() {
+        quizForm.style.display = 'none';
+        scoreContainer.innerHTML = `
+          <h3>Quiz Complete</h3>
+          <p>Your score: ${score} / ${quizData.length}</p>
+          <button class="btn btn-primary" onClick="window.location.reload();">Restart</button>
+        `;
+        scoreContainer.style.display = 'block';
+      }
+
+      quizForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        calculateScore();
+      });
+
+      showQuestion();
+    });
+  </script>
+</body>
+
+</html>
