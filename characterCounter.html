@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Counter</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .counter {
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <form id="characterForm">
+      <div class="form-group">
+        <label for="textInput">Text:</label>
+        <textarea id="textInput" class="form-control" rows="5" maxlength="100"></textarea>
+      </div>
+    </form>
+
+    <div id="counter" class="counter"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const textInput = document.getElementById('textInput');
+      const counter = document.getElementById('counter');
+
+      textInput.addEventListener('input', function() {
+        const remainingChars = textInput.maxLength - textInput.value.length;
+        counter.textContent = `${remainingChars} characters remaining`;
+      });
+    });
+  </script>
+</body>
+
+</html>
