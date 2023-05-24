@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <form id="tableForm" class="mb-4">
+      <div class="form-row">
+        <div class="col">
+          <label for="rowsInput">Rows:</label>
+          <input type="number" id="rowsInput" class="form-control" required>
+        </div>
+        <div class="col">
+          <label for="columnsInput">Columns:</label>
+          <input type="number" id="columnsInput" class="form-control" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Create Table</button>
+    </form>
+
+    <div id="tableContainer"></div>
+
+    <div class="mt-4">
+      <button id="deleteRowBtn" class="btn btn-danger" disabled>Delete Row</button>
+      <button id="deleteColumnBtn" class="btn btn-danger" disabled>Delete Column</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      const tableForm = document.getElementById('tableForm');
+      const tableContainer = document.getElementById('tableContainer');
+      const deleteRowBtn = document.getElementById('deleteRowBtn');
+      const deleteColumnBtn = document.getElementById('deleteColumnBtn');
+      let table;
+
+      function updateDeleteButtonStatus() {
+        deleteRowBtn.disabled = !table || table.rows.length === 0;
+        deleteColumnBtn.disabled = !table || table.rows.length === 0 || table.rows[0].cells.length === 0;
+      }
+
+      tableForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const rows = parseInt(document.getElementById('rowsInput').value);
+        const columns = parseInt(document.getElementById('columnsInput').value);
+        createTable(rows, columns);
+        updateDeleteButtonStatus();
+      });
+
+      deleteRowBtn.addEventListener('click', function() {
+        if (table && table.rows.length > 0) {
+          table.deleteRow(table.rows.length - 1);
+          updateDeleteButtonStatus();
+        }
+      });
+
+      deleteColumnBtn.addEventListener('click', function() {
+        if (table && table.rows.length > 0) {
+          const rowCount = table.rows[0].cells.length;
+          for (let i = 0; i < table.rows.length; i++) {
+            table.rows[i].deleteCell(rowCount - 1);
+          }
+          updateDeleteButtonStatus();
+        }
+      });
+
+      function createTable(rows, columns) {
+        table = document.createElement('table');
+
+        for (let i = 0; i < rows; i++) {
+          const row = document.createElement('tr');
+          for (let j = 0; j < columns; j++) {
+            const cell = document.createElement('td');
+            cell.textContent = `Row ${i + 1}, Column ${j + 1}`;
+            row.appendChild(cell);
+          }
+          table.appendChild(row);
+        }
+
+        tableContainer.innerHTML = '';
+        tableContainer.appendChild(table);
+      }
+    });
+  </script>
+</body>
+
+</html>

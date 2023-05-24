@@ -1,0 +1,17 @@
+.main-image{
+    height: 400px;
+    width: 400px;
+ }
+ 
+ 
+ .display-flex{
+    display: flex;
+ }
+ 
+ 
+ .gallery{
+    height: 200px;
+    width: 200px;
+    margin-right: 10px;
+ }
+ 
